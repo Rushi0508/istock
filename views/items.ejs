@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items | iStock</title>
+</head>
+<body>
+    <% let sellValue=0,purchaseValue=0; %>
+    <% items.forEach((item)=>{
+        sellValue+=item.sellingPrice * item.quantity;
+        purchaseValue+=item.purchasePrice * item.quantity;
+    })%>
+    <div>Stock Selling Value: <%= sellValue %></div>
+    <div>Stock Purhase Value: <%= purchaseValue %></div>
+    <hr>
+    <% items.forEach((item)=>{%>
+        <div>
+            <p>Name: <%= item.item %> </p>
+            <p>Selling Price: <%= item.sellingPrice %> </p>
+            <p>Category: <%= item.category %> </p>
+            <p>Remaining Stock: <%= item.quantity %> </p>
+        </div><hr>
+    <%})%>
+</body>
+</html>
