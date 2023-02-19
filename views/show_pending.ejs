@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Payments</title>
+    <link rel="stylesheet" href="/pendingsty.css">
+</head>
+<body>
+    <h1>Showing Pending DATA</h1>
+    <button><a href="/khatabook">Back</a></button>
+    <ol>
+        <% for(user of users){ %>
+            <% if(user.paymentStatus === "pending") {%>
+        <li>
+            Name : <%= user.name %><br>
+            Amount : <%= user.amount %><br>
+            Payment status : <%= user.paymentStatus %><br>
+            Borrow date : <%= user.borrowdate %><br>
+            <a href="/topaid/<%= user._id %>" id="topaid">To Paid</a>
+        </li>
+        <%} } %>
+    </ol>
+</body>
+</html>
