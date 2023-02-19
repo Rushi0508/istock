@@ -1,0 +1,15 @@
+.container{
+    display: block;
+    min-height: 100%;
+    padding: 50px;
+}
+.container{
+    background:linear-gradient(to bottom left,#000,#1b2026);
+    width: 82%;
+    position: relative;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

@@ -2,11 +2,13 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-var easyinvoice = require('easyinvoice');
-
+const easyinvoice = require('easyinvoice');
+const fs = require("fs");
 const app = express();
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.urlencoded({
     extended: true
 }))
@@ -40,8 +42,8 @@ const entrySchema = new mongoose.Schema({
 });
 const Entry = mongoose.model("Entry", entrySchema);
 
-app.get("/", (req,res)=>{
-    res.render("home");
+app.get("/dashboard", (req,res)=>{
+    res.render("dashboard");
 })
 app.get("/items", (req,res)=>{
     Item.find({item: {$ne: null}}, (err,foundItems)=>{
@@ -90,6 +92,14 @@ app.post("/stock-in", (req,res)=>{
         }
     })
 });
+
+app.get("/register", (req,res)=>{
+    res.render("register");
+});
+app.post("/register", (req,res)=>{
+    
+});
+
 app.post("/stock-out", (req,res)=>{
     Item.updateMany({_id: req.body.id}, { $set: { quantity: parseInt(req.body.currQuantity) - parseInt(req.body.quantity)}}, {$set: {sellingPrice: parseInt(req.body.sp)}}, (err)=>{
         if(err){
@@ -124,7 +134,20 @@ app.post("/add-item", (req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.redirect("items");
+            const newEntry = new Entry({
+                item: req.body.itemName,
+                quantity: parseInt(req.body.quantity),
+                purchasePrice: parseInt(req.body.pp),
+                sellingPrice: parseInt(req.body.sp),
+                operation: "purchase",
+                new: true
+            });
+            newEntry.save((err)=>{
+                if(err){ console.log(err); }
+                else{
+                    res.redirect("items");
+                }
+            })
         }
     })
 });
@@ -150,11 +173,11 @@ app.get("/entries", (req,res)=>{
 });
 
 app.post("/bill", (req,res)=>{
-    Entry.find({_id: req.body.id}, (err,entry)=>{
+    Entry.findOne({_id: req.body.id}, (err,entry)=>{
         if(err){
             console.log(err);
         }else{
-            
+            res.render("bill", {entry});
         }
     })
 })

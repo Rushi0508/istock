@@ -1,0 +1,15 @@
+<%- include('partials/navbar.ejs') %>
+    <div class="container">
+        <h2>Register</h2>
+        <form action="register" method="post">
+            <label for="store">Store Name:</label>
+            <input type="text" name="store" id="store"><br>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email"><br>
+            <label for="password">Password:</label>
+            <input type="text" name="password"><br>
+            <label for="cpassword">Confirm Password:</label>
+            <input type="text" name="cpassword"><br>
+            <input type="submit">
+        </form>
+    </div>

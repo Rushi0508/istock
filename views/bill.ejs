@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/easyinvoice/dist/easyinvoice.min.js"></script>
+</head>
+<body>
+    <button onclick="downloadInvoice()">Download Bill</button>
+    
+    <script>
+        function downloadInvoice(){
+            var data = {
+                "client": {
+                    "company": '<%-entry.name%>',
+                    "address": "Clientstreet 456",
+                    "zip": "-",
+                    "city": "-",
+                    "country": "India"
+                },
+
+                "sender": {
+                    "company": "Store Name",
+                    "address": "Sample Street 123",
+                    "zip": "-",
+                    "city": "-",
+                    "country": "India"
+                },
+
+                "images": {
+                    logo: "https://public.easyinvoice.cloud/img/logo_en_original.png",
+                },
+
+                "information": {
+                    // Invoice number
+                    "number": '<%-entry._id%>',
+                    // Invoice data
+                    "date": '<%-entry.createdAt%>'.substring(0,16),
+                    // Invoice due date
+                    "due-date": "-"
+                },
+
+                "products": [
+                    {
+                        "quantity": '<%-entry.quantity%>',
+                        "description": '<%-entry.item%>',
+                        "tax-rate": 0,
+                        "price": '<%-entry.sellingPrice%>'
+                    }
+                ],
+
+                "bottomNotice": "Kindly pay your invoice within 15 days.",
+
+                "settings": {
+                    "currency": "INR", // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
+                },
+                "translate": {
+                    /*
+                    "invoice": "FACTUUR",  // Default to 'INVOICE'
+                    "number": "Nummer", // Defaults to 'Number'
+                    "date": "Datum", // Default to 'Date'
+                    "due-date": "Verloopdatum", // Defaults to 'Due Date'
+                    "subtotal": "Subtotaal", // Defaults to 'Subtotal'
+                    "products": "Producten", // Defaults to 'Products'
+                    "quantity": "Aantal", // Default to 'Quantity'
+                    "price": "Prijs", // Defaults to 'Price'
+                    "product-total": "Totaal", // Defaults to 'Total'
+                    "total": "Totaal" // Defaults to 'Total'        
+                    */
+                },
+                "customize": {
+                    // "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html
+                },
+            };
+            easyinvoice.createInvoice(data, function(result){
+                easyinvoice.download("result.pdf");
+            });
+        }
+    </script>
+</body>
+</html>

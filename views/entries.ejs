@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entries | iStock</title>
+    <script src="https://unpkg.com/easyinvoice/dist/easyinvoice.min.js"></script>
 </head>
 <body>
     <h1>Entries</h1>
@@ -19,7 +20,7 @@
                 <p>Profit: <%= entry.quantity * (entry.sellingPrice - entry.purchasePrice)  %></p>
                 <form action="bill" method="post">
                     <input type="hidden" value="<%= entry._id %>" name="id">
-                    <input type="submit">
+                    <button type="submit">Generate Bill</button>
                 </form>
             <% } %>
             <% if(entry.operation === "purchase"){  %>
@@ -29,5 +30,6 @@
             
         </div><hr>
         <% }) %>
+         
 </body>
 </html>
