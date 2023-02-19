@@ -1,0 +1,54 @@
+body{
+    background-color: #a4c3b2;
+}
+
+button{
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    font-size: 25px;
+    border: 1px solid white;
+}
+
+a{
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+}
+
+h1{
+    display: inline-block;
+    background-color: #34a0a4;
+    width: 35%;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+li{
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 20px;
+    background-color: #99d98c;
+    padding-bottom: 20px;
+}
+
+ol{
+    width: 50%;
+    border-radius: 10px;
+    background-color: #ff9f1c;
+}
+
+li:first-child{
+    border-radius: 0px 10px 0px 0px;
+}
+
+li:last-child{
+    border-radius: 0px 0px 10px 0px;
+}
+#topaid{
+    background-color: #3a86ff;
+    padding: 5px;
+    border-radius: 5px;
+}
