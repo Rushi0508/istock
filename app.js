@@ -169,7 +169,7 @@ app.post("/bill", (req,res)=>{
 
 app.get("/khatabook",async (req,res)=>{
     const users = await data.find();
-    res.render('home.ejs',{users})
+    res.render('home2.ejs',{users})
 })
 
 app.get('/add_data',(req,res)=>{
