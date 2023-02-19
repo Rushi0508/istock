@@ -16,8 +16,27 @@
         <div>
             <p>Name: <%= item.item %> </p>
             <p>Remaining Stock: <%= item.quantity %> </p>
-            <a href="/delete-item">Delete</a>
-            <a href="/edit-item">Edit</a>
+            <button data-toggle="modal" data-target="#delete<%=c%>">Delete</button>
+            <div class="modal fade" id="delete<%=c%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirm Delete <%= item.item%>?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/delete-item" method="post">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <input type="hidden" value="<%= item._id %>" name="id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+           
             <button data-toggle="modal" data-target="#exampleModalIn<%=c%>">IN</button>
             <div class="modal fade" id="exampleModalIn<%=c%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -33,7 +52,9 @@
                                 <p>Available Stock: <%= item.quantity%> units</p>
                                 Enter quantity to add: <input type="text" name="quantity"><br>
                                 Purchase Price/unit <input type="text" value="<%= item.purchasePrice%>" name="pp">
+                                <input type="hidden" value="<%= item.sellingPrice%>" name="sp">
                                 <input type="hidden" value="<%= item._id%>" name="id">
+                                <input type="hidden" value="<%= item.item%>" name="name">
                                 <input type="hidden" value="<%= item.quantity%>" name="currQuantity">
                             </div>
                         
@@ -61,7 +82,9 @@
                                 <p>Available Stock: <%= item.quantity%> units</p>
                                 Enter quantity to remove: <input type="text" name="quantity"><br>
                                 Selling Price/unit <input type="text" value="<%= item.sellingPrice%>" name="sp">
+                                <input type="hidden" value="<%= item.purchasePrice%>" name="pp">
                                 <input type="hidden" value="<%= item._id%>" name="id">
+                                <input type="hidden" value="<%= item.item%>" name="name">
                                 <input type="hidden" value="<%= item.quantity%>" name="currQuantity">
                             </div>
                         

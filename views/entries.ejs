@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entries | iStock</title>
+</head>
+<body>
+    <h1>Entries</h1>
+    <% entries.forEach((entry)=>{ %>
+        <div>
+            <p>Name: <%= entry.name %></p>
+            <p>Item: <%= entry.item %></p>
+            <p>Quantity: <%= entry.quantity %></p>
+            <% if(entry.operation === "sell"){  %>
+                <p>Price: <%= entry.sellingPrice %></p>
+                <p>Amount: <%= entry.quantity * entry.sellingPrice  %></p>
+                <p>Profit: <%= entry.quantity * (entry.sellingPrice - entry.purchasePrice)  %></p>
+                <form action="bill" method="post">
+                    <input type="hidden" value="<%= entry._id %>" name="id">
+                    <input type="submit">
+                </form>
+            <% } %>
+            <% if(entry.operation === "purchase"){  %>
+                <p>Price: <%= entry.purchasePrice %></p>
+                <p>Amount: <%= entry.quantity * entry.purchasePrice  %></p>
+            <% } %>
+            
+        </div><hr>
+        <% }) %>
+</body>
+</html>
