@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khatabook</title>
+    <link rel="stylesheet" href="/homesty.css">
+</head>
+<body>
+   <h1>Showing All DATA</h1>
+   <button><a href="/add_data">ADD DATA</a></button>
+   <button><a href="/show_pending">Show Pending</a></button>
+   <button><a href="/show_paid">Show Paid</a></button>
+   <button><a href="/clear_paid">Clear Paid</a></button>
+
+        <ol>
+            <% for(user of users){ %>
+                <% if(user.paymentStatus === "pending") {%>
+                    <li>
+                        Name : <%= user.name %><br>
+                        Amount : <%= user.amount %><br>
+                        Payment status : <%= user.paymentStatus %><br>
+                        Borrow date : <%= user.borrowdate %><br><br>
+                        <a href="/topaid/<%= user._id%>" id="topaid">To Paid</a>
+                    </li>
+            <% }else{ %>
+                <li>
+                    Name : <%= user.name %><br>
+                    Amount : <%= user.amount %><br>
+                    Payment status : <%= user.paymentStatus %><br>
+                    Borrow date : <%= user.borrowdate %>
+                </li>
+            <% } }%>
+        </ol>
+</body>
+</html>
