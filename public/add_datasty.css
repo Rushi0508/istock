@@ -1,0 +1,43 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body{
+    background-color: #a4c3b2;
+}
+
+form{
+    margin-top: 10%;
+    background-color: #0466c8;
+    width: 30%;
+    color:white;
+    border-radius: 10px;
+}
+
+input,button{
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+input{
+    background-color: #fefae0;
+    outline: none;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #fefae0;
+}
+
+label{
+    font-size: 20px;
+}
+
+button{
+    border-radius: 7px;
+    border: 1px solid #264653;
+    background-color: #264653;
+    color: white;
+    padding: 7px 15px 7px 15px;
+    font-size: 20px;
+}
