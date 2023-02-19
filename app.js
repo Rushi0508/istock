@@ -1,9 +1,13 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const alert = require("alert");
 const mongoose = require("mongoose");
 const easyinvoice = require('easyinvoice');
 const fs = require("fs");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
 const app = express();
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
@@ -41,6 +45,57 @@ const entrySchema = new mongoose.Schema({
     timestamps: true
 });
 const Entry = mongoose.model("Entry", entrySchema);
+
+const storeSchema = new mongoose.Schema({
+    storeName: String,
+    email: String,
+    password: String
+});
+const Store = mongoose.model("Store", storeSchema);
+
+app.get("/register", (req,res)=>{
+    res.render("register");
+});
+app.post("/register", (req,res)=>{
+    bcrypt.hash(req.body.password, saltRounds, (err,hash)=>{
+        const newStore = new Store({
+            storeName: req.body.store,
+            email: req.body.email,
+            password: hash
+        });
+        newStore.save((err)=>{
+            if(err){
+                console.log(err);
+            }else{
+                res.redirect("dashboard");
+            }
+        })
+    })
+});
+
+app.get("/login", (req,res)=>{
+    res.render("login");
+})
+app.post("/login", (req,res)=>{
+    const email = req.body.email;
+    const password = req.body.password;
+
+    Store.findOne({email: email}, (err,store)=>{
+        if(err){
+            console.log(err);
+        }else{
+            if(store){
+                bcrypt.compare(password, store.password, (err,result)=>{
+                    if(result===true){
+                        res.redirect("dashboard");
+                    }else{
+                        alert("Incorrect Password");
+                    }
+                })
+            }
+        }
+    })
+})
 
 app.get("/dashboard", (req,res)=>{
     res.render("dashboard");
@@ -93,12 +148,6 @@ app.post("/stock-in", (req,res)=>{
     })
 });
 
-app.get("/register", (req,res)=>{
-    res.render("register");
-});
-app.post("/register", (req,res)=>{
-    
-});
 
 app.post("/stock-out", (req,res)=>{
     Item.updateMany({_id: req.body.id}, { $set: { quantity: parseInt(req.body.currQuantity) - parseInt(req.body.quantity)}}, {$set: {sellingPrice: parseInt(req.body.sp)}}, (err)=>{
